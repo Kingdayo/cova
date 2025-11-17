@@ -5,18 +5,22 @@ import { About } from "@/components/About";
 import { Mission } from "@/components/Mission";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { Loading } from "@/components/Loading";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <Hero />
-      <Features />
-      <About />
-      <Mission />
-      <Contact />
-      <Footer />
-    </div>
+    <>
+      <Loading />
+      <div className="min-h-screen">
+        <Navbar />
+        <Hero />
+        <Features />
+        <About />
+        <Mission />
+        <Contact />
+        <Footer />
+      </div>
+    </>
   );
 };
 
