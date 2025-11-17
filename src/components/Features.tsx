@@ -1,6 +1,8 @@
 import { BarChart3, Users, Award, TrendingUp, Shield, Zap, Calendar, Clock, MapPin } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { InteractiveBadge } from "@/components/ui/InteractiveBadge";
+import { ChartDemo } from "@/components/ui/ChartDemo";
 
 const features = [
   {
@@ -76,6 +78,18 @@ export function Features() {
               <p className="text-muted-foreground leading-relaxed mb-4">
                 {feature.description}
               </p>
+
+              {feature.title === "Performance Recognition" && (
+                <div className="mt-4 flex justify-center">
+                  <InteractiveBadge />
+                </div>
+              )}
+
+              {feature.title === "Growth Tracking" && (
+                <div className="mt-4">
+                  <ChartDemo />
+                </div>
+              )}
               
               {index === 5 && (
                 <div className="mt-6 p-4 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/30 relative overflow-hidden">
