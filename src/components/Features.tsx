@@ -1,5 +1,6 @@
-import { BarChart3, Users, Award, TrendingUp, Shield, Zap } from "lucide-react";
+import { BarChart3, Users, Award, TrendingUp, Shield, Zap, Calendar, Clock, MapPin } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const features = [
   {
@@ -59,7 +60,9 @@ export function Features() {
           {features.map((feature, index) => (
             <Card
               key={index}
-              className="group p-6 md:p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer border-border/50 hover:border-primary/50 bg-card/50 backdrop-blur-sm animate-fade-in-up"
+              className={`group p-6 md:p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer border-border/50 hover:border-primary/50 bg-card/50 backdrop-blur-sm animate-fade-in-up ${
+                index === 5 ? 'ring-2 ring-primary/30 animate-pulse' : ''
+              }`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div
@@ -70,9 +73,45 @@ export function Features() {
               <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
                 {feature.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed mb-4">
                 {feature.description}
               </p>
+              
+              {index === 5 && (
+                <div className="mt-6 p-4 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/30 relative overflow-hidden">
+                  <div className="absolute top-2 right-2">
+                    <Badge className="bg-red-500 text-white animate-pulse">
+                      <span className="inline-block w-2 h-2 bg-white rounded-full mr-1 animate-ping"></span>
+                      LIVE
+                    </Badge>
+                  </div>
+                  
+                  <h4 className="font-bold text-lg mb-3 text-foreground">Upcoming Training</h4>
+                  
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-start gap-2">
+                      <Zap className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-foreground font-medium">Various sources of income for MSME's</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span className="text-muted-foreground">BBS Aud A</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span className="text-muted-foreground">9:00am - 3:00pm</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 pt-3 border-t border-primary/20">
+                    <button className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-medium text-sm">
+                      Register Now
+                    </button>
+                  </div>
+                </div>
+              )}
             </Card>
           ))}
         </div>
