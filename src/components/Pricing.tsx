@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,68 +28,39 @@ const pricingPlans = [
 ];
 
 const PricingCard = ({ plan, index }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.5 }}
+      viewport={{ amount: 0.5 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="perspective-1000"
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
+      whileHover={{
+        y: -10,
+        boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+        borderColor: "hsl(var(--primary))",
+      }}
+      className="border-2 border-transparent rounded-lg"
     >
-      <motion.div
-        className="relative w-full h-full"
-        style={{ transformStyle: "preserve-3d" }}
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        {/* Front of the card */}
-        <div className="absolute w-full h-full backface-hidden">
-          <Card className={`h-full flex flex-col ${plan.isPopular ? "border-primary" : ""}`}>
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <CardTitle>{plan.title}</CardTitle>
-                {plan.isPopular && <Badge>Most Popular</Badge>}
-              </div>
-              <CardDescription>{plan.description}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <p className="text-4xl font-bold">{plan.price}</p>
-              <ul className="mt-4 space-y-2 text-left">
-                {plan.features.slice(0, 3).map((feature, i) => (
-                  <li key={i}>{feature}</li>
-                ))}
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full">Embark on Your Journey</Button>
-            </CardFooter>
-          </Card>
-        </div>
-
-        {/* Back of the card */}
-        <div className="absolute w-full h-full backface-hidden" style={{ transform: "rotateY(180deg)" }}>
-          <Card className={`h-full flex flex-col ${plan.isPopular ? "border-primary" : ""}`}>
-            <CardHeader>
-              <CardTitle>{plan.title} Features</CardTitle>
-              <CardDescription>Full Details</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <ul className="space-y-2 text-left">
-                {plan.features.map((feature, i) => (
-                  <li key={i}>{feature}</li>
-                ))}
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full">Choose Plan</Button>
-            </CardFooter>
-          </Card>
-        </div>
-      </motion.div>
+      <Card className={`h-full flex flex-col ${plan.isPopular ? "border-primary" : ""}`}>
+        <CardHeader>
+          <div className="flex justify-between items-center">
+            <CardTitle>{plan.title}</CardTitle>
+            {plan.isPopular && <Badge>Most Popular</Badge>}
+          </div>
+          <CardDescription>{plan.description}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex-grow">
+          <p className="text-4xl font-bold">{plan.price}</p>
+          <ul className="mt-4 space-y-2 text-left">
+            {plan.features.map((feature, i) => (
+              <li key={i}>{feature}</li>
+            ))}
+          </ul>
+        </CardContent>
+        <CardFooter>
+          <Button className="w-full">Embark on Your Journey</Button>
+        </CardFooter>
+      </Card>
     </motion.div>
   );
 };
