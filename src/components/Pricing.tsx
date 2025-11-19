@@ -1,6 +1,99 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+
+const pricingPlans = [
+  {
+    title: "Silver",
+    description: "Basic Features",
+    price: "$10/mo",
+    features: ["Feature 1", "Feature 2", "Feature 3"],
+    isPopular: false,
+  },
+  {
+    title: "Gold",
+    description: "Advanced Features",
+    price: "$20/mo",
+    features: ["All Silver Features", "Feature 4", "Feature 5", "Feature 6"],
+    isPopular: true,
+  },
+  {
+    title: "Diamond",
+    description: "Premium Features",
+    price: "$30/mo",
+    features: ["All Gold Features", "Feature 7", "Feature 8", "Feature 9"],
+    isPopular: false,
+  },
+];
+
+const PricingCard = ({ plan, index }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="perspective-1000"
+      onMouseEnter={() => setIsFlipped(true)}
+      onMouseLeave={() => setIsFlipped(false)}
+    >
+      <motion.div
+        className="relative w-full h-full"
+        style={{ transformStyle: "preserve-3d" }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Front of the card */}
+        <div className="absolute w-full h-full backface-hidden">
+          <Card className={`h-full flex flex-col ${plan.isPopular ? "border-primary" : ""}`}>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>{plan.title}</CardTitle>
+                {plan.isPopular && <Badge>Most Popular</Badge>}
+              </div>
+              <CardDescription>{plan.description}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-grow">
+              <p className="text-4xl font-bold">{plan.price}</p>
+              <ul className="mt-4 space-y-2 text-left">
+                {plan.features.slice(0, 3).map((feature, i) => (
+                  <li key={i}>{feature}</li>
+                ))}
+              </ul>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full">Embark on Your Journey</Button>
+            </CardFooter>
+          </Card>
+        </div>
+
+        {/* Back of the card */}
+        <div className="absolute w-full h-full backface-hidden" style={{ transform: "rotateY(180deg)" }}>
+          <Card className={`h-full flex flex-col ${plan.isPopular ? "border-primary" : ""}`}>
+            <CardHeader>
+              <CardTitle>{plan.title} Features</CardTitle>
+              <CardDescription>Full Details</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-grow">
+              <ul className="space-y-2 text-left">
+                {plan.features.map((feature, i) => (
+                  <li key={i}>{feature}</li>
+                ))}
+              </ul>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full">Choose Plan</Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
 
 export const Pricing = () => {
   return (
@@ -11,62 +104,9 @@ export const Pricing = () => {
           Choose the plan that's right for you.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          <Card>
-            <CardHeader>
-              <CardTitle>Silver</CardTitle>
-              <CardDescription>Basic Features</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-4xl font-bold">$10/mo</p>
-              <ul className="mt-4 space-y-2 text-left">
-                <li>Feature 1</li>
-                <li>Feature 2</li>
-                <li>Feature 3</li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Button>Embark on Your Journey</Button>
-            </CardFooter>
-          </Card>
-          <Card className="border-primary">
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <CardTitle>Gold</CardTitle>
-                <Badge>Most Popular</Badge>
-              </div>
-              <CardDescription>Advanced Features</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-4xl font-bold">$20/mo</p>
-              <ul className="mt-4 space-y-2 text-left">
-                <li>All Silver Features</li>
-                <li>Feature 4</li>
-                <li>Feature 5</li>
-                <li>Feature 6</li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Button>Embark on Your Journey</Button>
-            </CardFooter>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Diamond</CardTitle>
-              <CardDescription>Premium Features</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-4xl font-bold">$30/mo</p>
-              <ul className="mt-4 space-y-2 text-left">
-                <li>All Gold Features</li>
-                <li>Feature 7</li>
-                <li>Feature 8</li>
-                <li>Feature 9</li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Button>Embark on Your Journey</Button>
-            </CardFooter>
-          </Card>
+          {pricingPlans.map((plan, index) => (
+            <PricingCard key={index} plan={plan} index={index} />
+          ))}
         </div>
       </div>
     </section>
