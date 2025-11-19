@@ -53,8 +53,9 @@ export function Mission() {
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{ amount: 0.5 }}
             variants={cardVariants}
+            whileHover={{ y: -10 }}
           >
             <Card className="p-8 md:p-10 h-full hover:shadow-2xl transition-shadow duration-500 border-2 border-transparent hover:border-primary/50 bg-card/80 backdrop-blur-sm group">
               <div className="flex items-center gap-4 mb-6">
@@ -80,8 +81,9 @@ export function Mission() {
           <motion.div
             initial="offscreen"
             whileInView="onscreen"
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{ amount: 0.5 }}
             variants={cardVariants2}
+            whileHover={{ y: -10 }}
           >
             <Card className="p-8 md:p-10 h-full hover:shadow-2xl transition-shadow duration-500 border-2 border-transparent hover:border-accent/50 bg-card/80 backdrop-blur-sm group">
               <div className="flex items-center gap-4 mb-6">
